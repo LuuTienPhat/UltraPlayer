@@ -8,7 +8,6 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Windows.Forms;
-using WMPLib;
 using TagLib;
 using NAudio;
 using NAudio.Wave;
@@ -22,7 +21,6 @@ namespace UltraPlayer
     public partial class FormMain : DevExpress.XtraEditors.XtraForm
     {
         List<FileInfo> files = new List<FileInfo>();
-        WindowsMediaPlayer myplayer = new WindowsMediaPlayer();
         int playerState = 0;
         Thread playMusic = null;
         
@@ -67,9 +65,6 @@ namespace UltraPlayer
         {
             int i = fileList.SelectedIndex;
             FileInfo file = files[i];
-
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
             playerState = 1;
 
             TagLib.File tagFile = TagLib.File.Create(file.FullName);
@@ -117,7 +112,6 @@ namespace UltraPlayer
                 // set "no cover" image
             }
 
-            myplayer.status.ToArray();
 
             IWavePlayer wavePlayer = new WaveOut();
             wavePlayer.Init(audioFileReader);   
@@ -147,29 +141,15 @@ namespace UltraPlayer
 
             if (playerState == 1)
             {
-                myplayer.controls.pause();
+                
                 playerState = 0;
             }
             else
             {
-                myplayer.controls.play();
+                
                 playerState = 1;
             }
 
-        }
-
-        private void Player_PlayStateChange(int NewState)
-        {
-            if ((WMPLib.WMPPlayState)NewState == WMPLib.WMPPlayState.wmppsStopped)
-            {
-                myplayer.close();
-            }
-        }
-
-        private void Player_MediaError(object pMediaObject)
-        {
-            MessageBox.Show("Cannot play media file.");
-            myplayer.close();
         }
 
         
@@ -182,9 +162,7 @@ namespace UltraPlayer
             int nextIndex = selectedIndex + 1;
             fileList.SelectedIndex = nextIndex;
             FileInfo file = files[nextIndex];
-            myplayer.controls.stop();
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
+            
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -195,9 +173,7 @@ namespace UltraPlayer
             int nextIndex = selectedIndex - 1;
             fileList.SelectedIndex = nextIndex;
             FileInfo file = files[nextIndex];
-            myplayer.controls.stop();
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
+           
         }
 
         private void musicProgressBar_Click(object sender, EventArgs e)
