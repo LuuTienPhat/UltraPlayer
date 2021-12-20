@@ -8,25 +8,24 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Windows.Forms;
-using WMPLib;
 using TagLib;
 using NAudio;
 using NAudio.Wave;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using NAudio.WaveFormRenderer;
 
 namespace UltraPlayer
 {
-    public partial class Form1 : DevExpress.XtraEditors.XtraForm
+    public partial class FormMain : DevExpress.XtraEditors.XtraForm
     {
         List<FileInfo> files = new List<FileInfo>();
-        WindowsMediaPlayer myplayer = new WindowsMediaPlayer();
         int playerState = 0;
         Thread playMusic = null;
         
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             songArtists.Text = "";
@@ -66,9 +65,6 @@ namespace UltraPlayer
         {
             int i = fileList.SelectedIndex;
             FileInfo file = files[i];
-
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
             playerState = 1;
 
             TagLib.File tagFile = TagLib.File.Create(file.FullName);
@@ -79,12 +75,25 @@ namespace UltraPlayer
             songTitle.Text = title;
             songArtists.Text = artist;
 
-            AudioFileReader fileReader = new AudioFileReader(file.FullName);
+            AudioFileReader audioFileReader = new AudioFileReader(file.FullName);
+
+            // Calculate new position
+            long newPos = audioFileReader.Position + (long)(audioFileReader.WaveFormat.AverageBytesPerSecond * 2.5);
+            // Force it to align to a block boundary
+            if ((newPos % audioFileReader.WaveFormat.BlockAlign) != 0)
+                newPos -= newPos % audioFileReader.WaveFormat.BlockAlign;
+            // Force new position into valid range
+            newPos = Math.Max(0, Math.Min(audioFileReader.Length, newPos));
+            // set position
+            audioFileReader.Position = newPos;
+
+            Console.WriteLine(newPos);
             
             
 
-            DateTime dateTime = DateTime.ParseExact(fileReader.TotalTime.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-            lbNow.Text = fileReader.CurrentTime.ToString();
+
+            DateTime dateTime = DateTime.ParseExact(audioFileReader.TotalTime.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+            lbNow.Text = audioFileReader.CurrentTime.ToString();
             lbDuration.Text = dateTime.ToString("mm:ss");
 
             
@@ -102,6 +111,19 @@ namespace UltraPlayer
             {
                 // set "no cover" image
             }
+
+
+            IWavePlayer wavePlayer = new WaveOut();
+            wavePlayer.Init(audioFileReader);   
+            wavePlayer.Play();
+
+
+            //var maxPeakProvider = new MaxPeakProvider();
+            //var rmsPeakProvider = new RmsPeakProvider(200); // e.g. 200
+            //var samplingPeakProvider = new SamplingPeakProvider(200); // e.g. 200
+            //var averagePeakProvider = new AveragePeakProvider(4); // e.g. 4
+
+            musicProgressBar.EditValue = 30;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -119,30 +141,18 @@ namespace UltraPlayer
 
             if (playerState == 1)
             {
-                myplayer.controls.pause();
+                
                 playerState = 0;
             }
             else
             {
-                myplayer.controls.play();
+                
                 playerState = 1;
             }
 
         }
 
-        private void Player_PlayStateChange(int NewState)
-        {
-            if ((WMPLib.WMPPlayState)NewState == WMPLib.WMPPlayState.wmppsStopped)
-            {
-                myplayer.close();
-            }
-        }
-
-        private void Player_MediaError(object pMediaObject)
-        {
-            MessageBox.Show("Cannot play media file.");
-            myplayer.close();
-        }
+        
 
         private void btnNext_Click(object sender, EventArgs e)
         {
@@ -152,9 +162,7 @@ namespace UltraPlayer
             int nextIndex = selectedIndex + 1;
             fileList.SelectedIndex = nextIndex;
             FileInfo file = files[nextIndex];
-            myplayer.controls.stop();
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
+            
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -165,9 +173,12 @@ namespace UltraPlayer
             int nextIndex = selectedIndex - 1;
             fileList.SelectedIndex = nextIndex;
             FileInfo file = files[nextIndex];
-            myplayer.controls.stop();
-            myplayer.URL = file.FullName;
-            myplayer.controls.play();
+           
+        }
+
+        private void musicProgressBar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

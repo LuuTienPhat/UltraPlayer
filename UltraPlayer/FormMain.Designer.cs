@@ -1,6 +1,6 @@
 ﻿namespace UltraPlayer
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel3 = new DevExpress.XtraEditors.SidePanel();
             this.lbNow = new DevExpress.XtraEditors.LabelControl();
@@ -45,10 +45,16 @@
             this.songArtists = new DevExpress.XtraEditors.LabelControl();
             this.songTitle = new DevExpress.XtraEditors.LabelControl();
             this.listPlayer = new DevExpress.XtraEditors.SidePanel();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.fileList = new DevExpress.XtraEditors.ListBoxControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.openFilesDialog = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
             this.sidePanel4 = new DevExpress.XtraEditors.SidePanel();
+            this.unboundSource1 = new DevExpress.Data.UnboundSource(this.components);
+            this.sidePanel5 = new DevExpress.XtraEditors.SidePanel();
+            this.btnDeleteFiles = new DevExpress.XtraEditors.LabelControl();
+            this.lbDirectory = new DevExpress.XtraEditors.LabelControl();
+            this.btnAddFiles = new DevExpress.XtraEditors.LabelControl();
             this.sidePanel1.SuspendLayout();
             this.sidePanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.musicProgressBar.Properties)).BeginInit();
@@ -56,6 +62,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.songCover.Properties)).BeginInit();
             this.listPlayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unboundSource1)).BeginInit();
+            this.sidePanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // sidePanel1
@@ -71,6 +79,7 @@
             // 
             // sidePanel3
             // 
+            this.sidePanel3.AllowResize = false;
             this.sidePanel3.BorderThickness = 0;
             this.sidePanel3.Controls.Add(this.lbNow);
             this.sidePanel3.Controls.Add(this.lbDuration);
@@ -132,6 +141,7 @@
             this.musicProgressBar.Name = "musicProgressBar";
             this.musicProgressBar.Size = new System.Drawing.Size(400, 6);
             this.musicProgressBar.TabIndex = 5;
+            this.musicProgressBar.Click += new System.EventHandler(this.musicProgressBar_Click);
             // 
             // btnPrevious
             // 
@@ -169,6 +179,7 @@
             // 
             // sidePanel2
             // 
+            this.sidePanel2.AllowResize = false;
             this.sidePanel2.BorderThickness = 0;
             this.sidePanel2.Controls.Add(this.songCover);
             this.sidePanel2.Controls.Add(this.songArtists);
@@ -217,6 +228,8 @@
             // listPlayer
             // 
             this.listPlayer.AllowResize = false;
+            this.listPlayer.Controls.Add(this.sidePanel5);
+            this.listPlayer.Controls.Add(this.labelControl3);
             this.listPlayer.Controls.Add(this.fileList);
             this.listPlayer.Controls.Add(this.labelControl1);
             this.listPlayer.Dock = System.Windows.Forms.DockStyle.Left;
@@ -225,15 +238,24 @@
             this.listPlayer.Size = new System.Drawing.Size(308, 532);
             this.listPlayer.TabIndex = 1;
             // 
+            // labelControl3
+            // 
+            this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Gray;
+            this.labelControl3.Appearance.Options.UseForeColor = true;
+            this.labelControl3.Location = new System.Drawing.Point(111, 280);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(71, 17);
+            this.labelControl3.TabIndex = 2;
+            this.labelControl3.Text = "Browse Files";
+            // 
             // fileList
             // 
             this.fileList.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.fileList.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.fileList.Location = new System.Drawing.Point(0, 49);
+            this.fileList.Location = new System.Drawing.Point(1, 56);
             this.fileList.Margin = new System.Windows.Forms.Padding(4);
             this.fileList.Name = "fileList";
             this.fileList.ShowFocusRect = false;
-            this.fileList.Size = new System.Drawing.Size(307, 483);
+            this.fileList.Size = new System.Drawing.Size(307, 449);
             this.fileList.TabIndex = 1;
             this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged_1);
             this.fileList.Click += new System.EventHandler(this.fileList_Click);
@@ -242,12 +264,15 @@
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl1.Appearance.Options.UseFont = true;
-            this.labelControl1.Location = new System.Drawing.Point(13, 13);
+            this.labelControl1.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
+            this.labelControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelControl1.Location = new System.Drawing.Point(0, 0);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(4);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(33, 28);
+            this.labelControl1.Padding = new System.Windows.Forms.Padding(5, 10, 0, 10);
+            this.labelControl1.Size = new System.Drawing.Size(307, 48);
             this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "List";
+            this.labelControl1.Text = "File List";
             // 
             // openFilesDialog
             // 
@@ -263,7 +288,51 @@
             this.sidePanel4.TabIndex = 2;
             this.sidePanel4.Text = "sidePanel4";
             // 
-            // Form1
+            // sidePanel5
+            // 
+            this.sidePanel5.BorderThickness = 0;
+            this.sidePanel5.Controls.Add(this.btnDeleteFiles);
+            this.sidePanel5.Controls.Add(this.lbDirectory);
+            this.sidePanel5.Controls.Add(this.btnAddFiles);
+            this.sidePanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.sidePanel5.Location = new System.Drawing.Point(0, 503);
+            this.sidePanel5.Name = "sidePanel5";
+            this.sidePanel5.Size = new System.Drawing.Size(307, 29);
+            this.sidePanel5.TabIndex = 12;
+            this.sidePanel5.Text = "sidePanel5";
+            // 
+            // btnDeleteFiles
+            // 
+            this.btnDeleteFiles.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("labelControl5.ImageOptions.SvgImage")));
+            this.btnDeleteFiles.ImageOptions.SvgImageSize = new System.Drawing.Size(15, 15);
+            this.btnDeleteFiles.Location = new System.Drawing.Point(247, 4);
+            this.btnDeleteFiles.Margin = new System.Windows.Forms.Padding(10);
+            this.btnDeleteFiles.Name = "btnDeleteFiles";
+            this.btnDeleteFiles.Size = new System.Drawing.Size(19, 19);
+            this.btnDeleteFiles.TabIndex = 13;
+            // 
+            // lbDirectory
+            // 
+            this.lbDirectory.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
+            this.lbDirectory.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbDirectory.Location = new System.Drawing.Point(0, 0);
+            this.lbDirectory.Name = "lbDirectory";
+            this.lbDirectory.Padding = new System.Windows.Forms.Padding(5, 5, 0, 5);
+            this.lbDirectory.Size = new System.Drawing.Size(234, 27);
+            this.lbDirectory.TabIndex = 11;
+            this.lbDirectory.Text = "Chosen Directory";
+            // 
+            // btnAddFiles
+            // 
+            this.btnAddFiles.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("labelControl4.ImageOptions.SvgImage")));
+            this.btnAddFiles.ImageOptions.SvgImageSize = new System.Drawing.Size(15, 15);
+            this.btnAddFiles.Location = new System.Drawing.Point(276, 4);
+            this.btnAddFiles.Margin = new System.Windows.Forms.Padding(10);
+            this.btnAddFiles.Name = "btnAddFiles";
+            this.btnAddFiles.Size = new System.Drawing.Size(19, 19);
+            this.btnAddFiles.TabIndex = 12;
+            // 
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -272,9 +341,9 @@
             this.Controls.Add(this.listPlayer);
             this.Controls.Add(this.sidePanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("Form1.IconOptions.SvgImage")));
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("FormMain.IconOptions.SvgImage")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UltraPlayer";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -288,6 +357,9 @@
             this.listPlayer.ResumeLayout(false);
             this.listPlayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unboundSource1)).EndInit();
+            this.sidePanel5.ResumeLayout(false);
+            this.sidePanel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -313,6 +385,12 @@
         private DevExpress.XtraEditors.LabelControl lbDuration;
         private DevExpress.XtraEditors.PictureEdit songCover;
         private DevExpress.XtraEditors.SidePanel sidePanel4;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.Data.UnboundSource unboundSource1;
+        private DevExpress.XtraEditors.SidePanel sidePanel5;
+        private DevExpress.XtraEditors.LabelControl btnDeleteFiles;
+        private DevExpress.XtraEditors.LabelControl lbDirectory;
+        private DevExpress.XtraEditors.LabelControl btnAddFiles;
     }
 }
 
