@@ -15,10 +15,11 @@ using NAudio.Wave;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using NAudio.WaveFormRenderer;
 
 namespace UltraPlayer
 {
-    public partial class Form1 : DevExpress.XtraEditors.XtraForm
+    public partial class FormMain : DevExpress.XtraEditors.XtraForm
     {
         List<FileInfo> files = new List<FileInfo>();
         WindowsMediaPlayer myplayer = new WindowsMediaPlayer();
@@ -26,7 +27,7 @@ namespace UltraPlayer
         Thread playMusic = null;
         
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             songArtists.Text = "";
@@ -79,12 +80,25 @@ namespace UltraPlayer
             songTitle.Text = title;
             songArtists.Text = artist;
 
-            AudioFileReader fileReader = new AudioFileReader(file.FullName);
+            AudioFileReader audioFileReader = new AudioFileReader(file.FullName);
+
+            // Calculate new position
+            long newPos = audioFileReader.Position + (long)(audioFileReader.WaveFormat.AverageBytesPerSecond * 2.5);
+            // Force it to align to a block boundary
+            if ((newPos % audioFileReader.WaveFormat.BlockAlign) != 0)
+                newPos -= newPos % audioFileReader.WaveFormat.BlockAlign;
+            // Force new position into valid range
+            newPos = Math.Max(0, Math.Min(audioFileReader.Length, newPos));
+            // set position
+            audioFileReader.Position = newPos;
+
+            Console.WriteLine(newPos);
             
             
 
-            DateTime dateTime = DateTime.ParseExact(fileReader.TotalTime.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-            lbNow.Text = fileReader.CurrentTime.ToString();
+
+            DateTime dateTime = DateTime.ParseExact(audioFileReader.TotalTime.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
+            lbNow.Text = audioFileReader.CurrentTime.ToString();
             lbDuration.Text = dateTime.ToString("mm:ss");
 
             
@@ -102,6 +116,20 @@ namespace UltraPlayer
             {
                 // set "no cover" image
             }
+
+            myplayer.status.ToArray();
+
+            IWavePlayer wavePlayer = new WaveOut();
+            wavePlayer.Init(audioFileReader);   
+            wavePlayer.Play();
+
+
+            //var maxPeakProvider = new MaxPeakProvider();
+            //var rmsPeakProvider = new RmsPeakProvider(200); // e.g. 200
+            //var samplingPeakProvider = new SamplingPeakProvider(200); // e.g. 200
+            //var averagePeakProvider = new AveragePeakProvider(4); // e.g. 4
+
+            musicProgressBar.EditValue = 30;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -144,6 +172,8 @@ namespace UltraPlayer
             myplayer.close();
         }
 
+        
+
         private void btnNext_Click(object sender, EventArgs e)
         {
             int selectedIndex = fileList.SelectedIndex;
@@ -168,6 +198,11 @@ namespace UltraPlayer
             myplayer.controls.stop();
             myplayer.URL = file.FullName;
             myplayer.controls.play();
+        }
+
+        private void musicProgressBar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

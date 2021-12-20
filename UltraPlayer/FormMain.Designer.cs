@@ -1,6 +1,6 @@
 ﻿namespace UltraPlayer
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel3 = new DevExpress.XtraEditors.SidePanel();
             this.lbNow = new DevExpress.XtraEditors.LabelControl();
@@ -49,6 +49,8 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.openFilesDialog = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
             this.sidePanel4 = new DevExpress.XtraEditors.SidePanel();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.unboundSource1 = new DevExpress.Data.UnboundSource(this.components);
             this.sidePanel1.SuspendLayout();
             this.sidePanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.musicProgressBar.Properties)).BeginInit();
@@ -56,6 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.songCover.Properties)).BeginInit();
             this.listPlayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unboundSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // sidePanel1
@@ -132,6 +135,7 @@
             this.musicProgressBar.Name = "musicProgressBar";
             this.musicProgressBar.Size = new System.Drawing.Size(400, 6);
             this.musicProgressBar.TabIndex = 5;
+            this.musicProgressBar.Click += new System.EventHandler(this.musicProgressBar_Click);
             // 
             // btnPrevious
             // 
@@ -217,6 +221,7 @@
             // listPlayer
             // 
             this.listPlayer.AllowResize = false;
+            this.listPlayer.Controls.Add(this.labelControl3);
             this.listPlayer.Controls.Add(this.fileList);
             this.listPlayer.Controls.Add(this.labelControl1);
             this.listPlayer.Dock = System.Windows.Forms.DockStyle.Left;
@@ -245,9 +250,9 @@
             this.labelControl1.Location = new System.Drawing.Point(13, 13);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(4);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(33, 28);
+            this.labelControl1.Size = new System.Drawing.Size(72, 28);
             this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "List";
+            this.labelControl1.Text = "File List";
             // 
             // openFilesDialog
             // 
@@ -262,6 +267,16 @@
             this.sidePanel4.Size = new System.Drawing.Size(681, 532);
             this.sidePanel4.TabIndex = 2;
             this.sidePanel4.Text = "sidePanel4";
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Appearance.ForeColor = System.Drawing.Color.Gray;
+            this.labelControl3.Appearance.Options.UseForeColor = true;
+            this.labelControl3.Location = new System.Drawing.Point(111, 280);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(71, 17);
+            this.labelControl3.TabIndex = 2;
+            this.labelControl3.Text = "Browse Files";
             // 
             // Form1
             // 
@@ -288,6 +303,7 @@
             this.listPlayer.ResumeLayout(false);
             this.listPlayer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unboundSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -313,6 +329,8 @@
         private DevExpress.XtraEditors.LabelControl lbDuration;
         private DevExpress.XtraEditors.PictureEdit songCover;
         private DevExpress.XtraEditors.SidePanel sidePanel4;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.Data.UnboundSource unboundSource1;
     }
 }
 
