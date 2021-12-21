@@ -1,6 +1,6 @@
 ﻿namespace UltraPlayer
 {
-    partial class FormMain
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel3 = new DevExpress.XtraEditors.SidePanel();
             this.btnPrevious = new DevExpress.XtraEditors.SimpleButton();
@@ -72,9 +72,9 @@
             this.sidePanel1.Controls.Add(this.sidePanel3);
             this.sidePanel1.Controls.Add(this.sidePanel2);
             this.sidePanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.sidePanel1.Location = new System.Drawing.Point(0, 532);
+            this.sidePanel1.Location = new System.Drawing.Point(0, 536);
             this.sidePanel1.Name = "sidePanel1";
-            this.sidePanel1.Size = new System.Drawing.Size(1102, 102);
+            this.sidePanel1.Size = new System.Drawing.Size(1104, 102);
             this.sidePanel1.TabIndex = 0;
             this.sidePanel1.Text = "sidePanel1";
             // 
@@ -91,7 +91,7 @@
             this.sidePanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sidePanel3.Location = new System.Drawing.Point(307, 1);
             this.sidePanel3.Name = "sidePanel3";
-            this.sidePanel3.Size = new System.Drawing.Size(795, 101);
+            this.sidePanel3.Size = new System.Drawing.Size(797, 101);
             this.sidePanel3.TabIndex = 4;
             this.sidePanel3.Text = "sidePanel3";
             // 
@@ -228,7 +228,7 @@
             this.listPlayer.Dock = System.Windows.Forms.DockStyle.Left;
             this.listPlayer.Location = new System.Drawing.Point(0, 0);
             this.listPlayer.Name = "listPlayer";
-            this.listPlayer.Size = new System.Drawing.Size(308, 532);
+            this.listPlayer.Size = new System.Drawing.Size(308, 536);
             this.listPlayer.TabIndex = 1;
             // 
             // sidePanel5
@@ -239,7 +239,7 @@
             this.sidePanel5.Controls.Add(this.btnDeleteFiles);
             this.sidePanel5.Controls.Add(this.lbNumberOfSongs);
             this.sidePanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.sidePanel5.Location = new System.Drawing.Point(0, 503);
+            this.sidePanel5.Location = new System.Drawing.Point(0, 507);
             this.sidePanel5.Name = "sidePanel5";
             this.sidePanel5.Size = new System.Drawing.Size(307, 29);
             this.sidePanel5.TabIndex = 12;
@@ -347,7 +347,7 @@
             this.sidePanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sidePanel4.Location = new System.Drawing.Point(308, 0);
             this.sidePanel4.Name = "sidePanel4";
-            this.sidePanel4.Size = new System.Drawing.Size(794, 532);
+            this.sidePanel4.Size = new System.Drawing.Size(796, 536);
             this.sidePanel4.TabIndex = 2;
             this.sidePanel4.Text = "sidePanel4";
             // 
@@ -372,20 +372,20 @@
             this.svgImageCollection.Add("pause", "image://svgimages/arrows/pause.svg");
             this.svgImageCollection.Add("next", "image://svgimages/arrows/next.svg");
             // 
-            // FormMain
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1102, 634);
+            this.ClientSize = new System.Drawing.Size(1104, 638);
             this.Controls.Add(this.sidePanel4);
             this.Controls.Add(this.listPlayer);
             this.Controls.Add(this.sidePanel1);
             this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("FormMain.IconOptions.SvgImage")));
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("MainForm.IconOptions.SvgImage")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "FormMain";
+            this.Name = "MainForm";
             this.Opacity = 0.98D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UltraPlayer";

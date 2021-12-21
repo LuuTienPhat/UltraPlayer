@@ -9,17 +9,17 @@ using System.Windows.Forms;
 
 namespace UltraPlayer
 {
-    public partial class FormMain : DevExpress.XtraEditors.XtraForm
+    public partial class MainForm : DevExpress.XtraEditors.XtraForm
     {
         private List<FileInfo> files = new List<FileInfo>();
         private Player player;
         private TagLib.File tagFile;
 
 
-        public FormMain()
+        public MainForm()
         {
             InitializeComponent();
-            Initialize();
+            //Initialize();
         }
 
         public void Initialize()
