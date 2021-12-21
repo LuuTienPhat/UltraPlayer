@@ -32,14 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel3 = new DevExpress.XtraEditors.SidePanel();
+            this.btnPrevious = new DevExpress.XtraEditors.SimpleButton();
+            this.btnNext = new DevExpress.XtraEditors.SimpleButton();
+            this.btnPlay = new DevExpress.XtraEditors.SimpleButton();
             this.lbNow = new DevExpress.XtraEditors.LabelControl();
             this.lbDuration = new DevExpress.XtraEditors.LabelControl();
-            this.btnStop = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.musicProgressBar = new DevExpress.XtraEditors.ProgressBarControl();
-            this.btnPrevious = new DevExpress.XtraEditors.LabelControl();
-            this.btnNext = new DevExpress.XtraEditors.LabelControl();
-            this.btnPlay = new DevExpress.XtraEditors.LabelControl();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
             this.songCover = new DevExpress.XtraEditors.PictureEdit();
             this.songArtists = new DevExpress.XtraEditors.LabelControl();
@@ -48,12 +46,15 @@
             this.sidePanel5 = new DevExpress.XtraEditors.SidePanel();
             this.btnAddFiles = new DevExpress.XtraEditors.SimpleButton();
             this.btnDeleteFiles = new DevExpress.XtraEditors.SimpleButton();
-            this.lbDirectory = new DevExpress.XtraEditors.LabelControl();
+            this.lbNumberOfSongs = new DevExpress.XtraEditors.LabelControl();
             this.lbBrowseFiles = new DevExpress.XtraEditors.LabelControl();
             this.fileList = new DevExpress.XtraEditors.ListBoxControl();
+            this.listBoxControlToolTip = new DevExpress.Utils.ToolTipController(this.components);
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.openFileDialog = new DevExpress.XtraEditors.XtraOpenFileDialog(this.components);
             this.sidePanel4 = new DevExpress.XtraEditors.SidePanel();
+            this.btnSettings = new DevExpress.XtraEditors.SimpleButton();
+            this.svgImageCollection = new DevExpress.Utils.SvgImageCollection(this.components);
             this.sidePanel1.SuspendLayout();
             this.sidePanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.musicProgressBar.Properties)).BeginInit();
@@ -62,6 +63,8 @@
             this.listPlayer.SuspendLayout();
             this.sidePanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).BeginInit();
+            this.sidePanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection)).BeginInit();
             this.SuspendLayout();
             // 
             // sidePanel1
@@ -71,7 +74,7 @@
             this.sidePanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.sidePanel1.Location = new System.Drawing.Point(0, 532);
             this.sidePanel1.Name = "sidePanel1";
-            this.sidePanel1.Size = new System.Drawing.Size(989, 102);
+            this.sidePanel1.Size = new System.Drawing.Size(1102, 102);
             this.sidePanel1.TabIndex = 0;
             this.sidePanel1.Text = "sidePanel1";
             // 
@@ -79,24 +82,70 @@
             // 
             this.sidePanel3.AllowResize = false;
             this.sidePanel3.BorderThickness = 0;
-            this.sidePanel3.Controls.Add(this.lbNow);
-            this.sidePanel3.Controls.Add(this.lbDuration);
-            this.sidePanel3.Controls.Add(this.btnStop);
-            this.sidePanel3.Controls.Add(this.labelControl2);
-            this.sidePanel3.Controls.Add(this.musicProgressBar);
             this.sidePanel3.Controls.Add(this.btnPrevious);
             this.sidePanel3.Controls.Add(this.btnNext);
             this.sidePanel3.Controls.Add(this.btnPlay);
+            this.sidePanel3.Controls.Add(this.lbNow);
+            this.sidePanel3.Controls.Add(this.lbDuration);
+            this.sidePanel3.Controls.Add(this.musicProgressBar);
             this.sidePanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sidePanel3.Location = new System.Drawing.Point(307, 1);
             this.sidePanel3.Name = "sidePanel3";
-            this.sidePanel3.Size = new System.Drawing.Size(682, 101);
+            this.sidePanel3.Size = new System.Drawing.Size(795, 101);
             this.sidePanel3.TabIndex = 4;
             this.sidePanel3.Text = "sidePanel3";
             // 
+            // btnPrevious
+            // 
+            this.btnPrevious.AutoSize = true;
+            this.btnPrevious.AutoWidthInLayoutControl = true;
+            this.btnPrevious.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnPrevious.ImageOptions.SvgImage")));
+            this.btnPrevious.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
+            this.btnPrevious.Location = new System.Drawing.Point(354, 21);
+            this.btnPrevious.Margin = new System.Windows.Forms.Padding(5);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnPrevious.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.btnPrevious.Size = new System.Drawing.Size(31, 29);
+            this.btnPrevious.TabIndex = 17;
+            this.btnPrevious.ToolTip = "Add Files";
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.AutoSize = true;
+            this.btnNext.AutoWidthInLayoutControl = true;
+            this.btnNext.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnNext.ImageOptions.SvgImage")));
+            this.btnNext.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
+            this.btnNext.Location = new System.Drawing.Point(492, 21);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(5);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnNext.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.btnNext.Size = new System.Drawing.Size(31, 29);
+            this.btnNext.TabIndex = 16;
+            this.btnNext.ToolTip = "Add Files";
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.AutoSize = true;
+            this.btnPlay.AutoWidthInLayoutControl = true;
+            this.btnPlay.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnPlay.ImageOptions.SvgImage")));
+            this.btnPlay.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
+            this.btnPlay.Location = new System.Drawing.Point(425, 21);
+            this.btnPlay.Margin = new System.Windows.Forms.Padding(5);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnPlay.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.btnPlay.Size = new System.Drawing.Size(31, 29);
+            this.btnPlay.TabIndex = 15;
+            this.btnPlay.ToolTip = "Add Files";
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
             // lbNow
             // 
-            this.lbNow.Location = new System.Drawing.Point(117, 61);
+            this.lbNow.Location = new System.Drawing.Point(199, 61);
             this.lbNow.Margin = new System.Windows.Forms.Padding(5);
             this.lbNow.Name = "lbNow";
             this.lbNow.Size = new System.Drawing.Size(31, 17);
@@ -105,77 +154,21 @@
             // 
             // lbDuration
             // 
-            this.lbDuration.Location = new System.Drawing.Point(567, 61);
+            this.lbDuration.Location = new System.Drawing.Point(649, 61);
             this.lbDuration.Margin = new System.Windows.Forms.Padding(4);
             this.lbDuration.Name = "lbDuration";
             this.lbDuration.Size = new System.Drawing.Size(31, 17);
             this.lbDuration.TabIndex = 9;
             this.lbDuration.Text = "10:00";
             // 
-            // btnStop
-            // 
-            this.btnStop.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnStop.ImageOptions.SvgImage")));
-            this.btnStop.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
-            this.btnStop.Location = new System.Drawing.Point(227, 23);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(10);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(25, 25);
-            this.btnStop.TabIndex = 8;
-            // 
-            // labelControl2
-            // 
-            this.labelControl2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("labelControl2.ImageOptions.SvgImage")));
-            this.labelControl2.ImageOptions.SvgImageSize = new System.Drawing.Size(15, 15);
-            this.labelControl2.Location = new System.Drawing.Point(460, 26);
-            this.labelControl2.Margin = new System.Windows.Forms.Padding(8);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(19, 19);
-            this.labelControl2.TabIndex = 7;
-            // 
             // musicProgressBar
             // 
-            this.musicProgressBar.Location = new System.Drawing.Point(158, 68);
+            this.musicProgressBar.Location = new System.Drawing.Point(240, 68);
             this.musicProgressBar.Margin = new System.Windows.Forms.Padding(5);
             this.musicProgressBar.Name = "musicProgressBar";
             this.musicProgressBar.Size = new System.Drawing.Size(400, 6);
             this.musicProgressBar.TabIndex = 5;
             this.musicProgressBar.Click += new System.EventHandler(this.musicProgressBar_Click);
-            // 
-            // btnPrevious
-            // 
-            this.btnPrevious.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnPrevious.ImageOptions.SvgImage")));
-            this.btnPrevious.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
-            this.btnPrevious.Location = new System.Drawing.Point(289, 23);
-            this.btnPrevious.Margin = new System.Windows.Forms.Padding(6);
-            this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(25, 25);
-            this.btnPrevious.TabIndex = 6;
-            this.btnPrevious.ToolTip = "Previous";
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnNext.ImageOptions.SvgImage")));
-            this.btnNext.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
-            this.btnNext.Location = new System.Drawing.Point(399, 23);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(6);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(25, 25);
-            this.btnNext.TabIndex = 4;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // btnPlay
-            // 
-            this.btnPlay.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnPlay.ImageOptions.SvgImage")));
-            this.btnPlay.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
-            this.btnPlay.Location = new System.Drawing.Point(344, 23);
-            this.btnPlay.Margin = new System.Windows.Forms.Padding(5);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(25, 25);
-            this.btnPlay.TabIndex = 3;
-            this.btnPlay.ToolTip = "Play";
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
-            this.btnPlay.MouseHover += new System.EventHandler(this.btnPlay_MouseHover);
             // 
             // sidePanel2
             // 
@@ -244,7 +237,7 @@
             this.sidePanel5.BorderThickness = 0;
             this.sidePanel5.Controls.Add(this.btnAddFiles);
             this.sidePanel5.Controls.Add(this.btnDeleteFiles);
-            this.sidePanel5.Controls.Add(this.lbDirectory);
+            this.sidePanel5.Controls.Add(this.lbNumberOfSongs);
             this.sidePanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.sidePanel5.Location = new System.Drawing.Point(0, 503);
             this.sidePanel5.Name = "sidePanel5";
@@ -282,17 +275,20 @@
             this.btnDeleteFiles.Size = new System.Drawing.Size(25, 27);
             this.btnDeleteFiles.TabIndex = 12;
             this.btnDeleteFiles.ToolTip = "Delete All";
+            this.btnDeleteFiles.Click += new System.EventHandler(this.btnDeleteFiles_Click);
             // 
-            // lbDirectory
+            // lbNumberOfSongs
             // 
-            this.lbDirectory.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
-            this.lbDirectory.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lbDirectory.Location = new System.Drawing.Point(0, 0);
-            this.lbDirectory.Name = "lbDirectory";
-            this.lbDirectory.Padding = new System.Windows.Forms.Padding(5, 5, 0, 5);
-            this.lbDirectory.Size = new System.Drawing.Size(190, 27);
-            this.lbDirectory.TabIndex = 11;
-            this.lbDirectory.Text = "Chosen Directory";
+            this.lbNumberOfSongs.Appearance.Options.UseTextOptions = true;
+            this.lbNumberOfSongs.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.NoWrap;
+            this.lbNumberOfSongs.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.Vertical;
+            this.lbNumberOfSongs.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lbNumberOfSongs.Location = new System.Drawing.Point(0, 0);
+            this.lbNumberOfSongs.Name = "lbNumberOfSongs";
+            this.lbNumberOfSongs.Padding = new System.Windows.Forms.Padding(5, 5, 0, 5);
+            this.lbNumberOfSongs.Size = new System.Drawing.Size(234, 27);
+            this.lbNumberOfSongs.TabIndex = 11;
+            this.lbNumberOfSongs.Text = "0 songs";
             // 
             // lbBrowseFiles
             // 
@@ -305,7 +301,7 @@
             this.lbBrowseFiles.Size = new System.Drawing.Size(71, 17);
             this.lbBrowseFiles.TabIndex = 2;
             this.lbBrowseFiles.Text = "Browse Files";
-            this.lbBrowseFiles.Click += new System.EventHandler(this.labelControl3_Click);
+            this.lbBrowseFiles.Click += new System.EventHandler(this.lbBrowseFiles_Click);
             // 
             // fileList
             // 
@@ -318,8 +314,13 @@
             this.fileList.ShowFocusRect = false;
             this.fileList.Size = new System.Drawing.Size(306, 449);
             this.fileList.TabIndex = 1;
-            this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged_1);
+            this.fileList.ToolTipController = this.listBoxControlToolTip;
+            this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged);
             this.fileList.Click += new System.EventHandler(this.fileList_Click);
+            // 
+            // listBoxControlToolTip
+            // 
+            this.listBoxControlToolTip.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.listBoxControlToolTip_GetActiveObjectInfo);
             // 
             // labelControl1
             // 
@@ -342,30 +343,52 @@
             // sidePanel4
             // 
             this.sidePanel4.AllowResize = false;
+            this.sidePanel4.Controls.Add(this.btnSettings);
             this.sidePanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sidePanel4.Location = new System.Drawing.Point(308, 0);
             this.sidePanel4.Name = "sidePanel4";
-            this.sidePanel4.Size = new System.Drawing.Size(681, 532);
+            this.sidePanel4.Size = new System.Drawing.Size(794, 532);
             this.sidePanel4.TabIndex = 2;
             this.sidePanel4.Text = "sidePanel4";
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.AutoSize = true;
+            this.btnSettings.AutoWidthInLayoutControl = true;
+            this.btnSettings.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnSettings.ImageOptions.SvgImage")));
+            this.btnSettings.ImageOptions.SvgImageSize = new System.Drawing.Size(20, 20);
+            this.btnSettings.Location = new System.Drawing.Point(749, 14);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(5);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.PaintStyle = DevExpress.XtraEditors.Controls.PaintStyles.Light;
+            this.btnSettings.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
+            this.btnSettings.Size = new System.Drawing.Size(31, 29);
+            this.btnSettings.TabIndex = 14;
+            this.btnSettings.ToolTip = "Add Files";
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // svgImageCollection
+            // 
+            this.svgImageCollection.Add("pause", "image://svgimages/arrows/pause.svg");
+            this.svgImageCollection.Add("next", "image://svgimages/arrows/next.svg");
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(989, 634);
+            this.ClientSize = new System.Drawing.Size(1102, 634);
             this.Controls.Add(this.sidePanel4);
             this.Controls.Add(this.listPlayer);
             this.Controls.Add(this.sidePanel1);
+            this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("FormMain.IconOptions.SvgImage")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Opacity = 0.95D;
+            this.Opacity = 0.98D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UltraPlayer";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.sidePanel1.ResumeLayout(false);
             this.sidePanel3.ResumeLayout(false);
             this.sidePanel3.PerformLayout();
@@ -378,6 +401,9 @@
             this.sidePanel5.ResumeLayout(false);
             this.sidePanel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileList)).EndInit();
+            this.sidePanel4.ResumeLayout(false);
+            this.sidePanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.svgImageCollection)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -392,22 +418,23 @@
         private DevExpress.XtraEditors.SidePanel sidePanel2;
         private DevExpress.XtraEditors.SidePanel sidePanel3;
         private DevExpress.XtraEditors.ProgressBarControl musicProgressBar;
-        private DevExpress.XtraEditors.LabelControl btnPrevious;
-        private DevExpress.XtraEditors.LabelControl btnNext;
-        private DevExpress.XtraEditors.LabelControl btnPlay;
         private DevExpress.XtraEditors.LabelControl songTitle;
         private DevExpress.XtraEditors.LabelControl songArtists;
-        private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.LabelControl btnStop;
         private DevExpress.XtraEditors.LabelControl lbNow;
         private DevExpress.XtraEditors.LabelControl lbDuration;
         private DevExpress.XtraEditors.PictureEdit songCover;
         private DevExpress.XtraEditors.SidePanel sidePanel4;
         private DevExpress.XtraEditors.LabelControl lbBrowseFiles;
         private DevExpress.XtraEditors.SidePanel sidePanel5;
-        private DevExpress.XtraEditors.LabelControl lbDirectory;
+        private DevExpress.XtraEditors.LabelControl lbNumberOfSongs;
         private DevExpress.XtraEditors.SimpleButton btnDeleteFiles;
         private DevExpress.XtraEditors.SimpleButton btnAddFiles;
+        private DevExpress.Utils.ToolTipController listBoxControlToolTip;
+        private DevExpress.XtraEditors.SimpleButton btnSettings;
+        private DevExpress.XtraEditors.SimpleButton btnPlay;
+        private DevExpress.XtraEditors.SimpleButton btnNext;
+        private DevExpress.XtraEditors.SimpleButton btnPrevious;
+        private DevExpress.Utils.SvgImageCollection svgImageCollection;
     }
 }
 
