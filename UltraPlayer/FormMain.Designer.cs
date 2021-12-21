@@ -108,7 +108,7 @@
             this.btnPrevious.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.btnPrevious.Size = new System.Drawing.Size(31, 29);
             this.btnPrevious.TabIndex = 17;
-            this.btnPrevious.ToolTip = "Add Files";
+            this.btnPrevious.ToolTip = "Previous";
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
@@ -124,7 +124,7 @@
             this.btnNext.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.btnNext.Size = new System.Drawing.Size(31, 29);
             this.btnNext.TabIndex = 16;
-            this.btnNext.ToolTip = "Add Files";
+            this.btnNext.ToolTip = "Next";
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnPlay
@@ -140,7 +140,7 @@
             this.btnPlay.ShowFocusRectangle = DevExpress.Utils.DefaultBoolean.False;
             this.btnPlay.Size = new System.Drawing.Size(31, 29);
             this.btnPlay.TabIndex = 15;
-            this.btnPlay.ToolTip = "Add Files";
+            this.btnPlay.ToolTip = "Play/Resume";
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // lbNow
