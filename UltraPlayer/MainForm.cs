@@ -3,23 +3,27 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace UltraPlayer
 {
     public partial class MainForm : DevExpress.XtraEditors.XtraForm
     {
-        private List<FileInfo> files = new List<FileInfo>();
+        SongList songList = new SongList();
         private Player player;
         private TagLib.File tagFile;
+        private System.Threading.Timer playingSong = null;
 
 
         public MainForm()
         {
             InitializeComponent();
-            //Initialize();
+            Initialize();
+
         }
 
         public void Initialize()
@@ -43,8 +47,9 @@ namespace UltraPlayer
                     foreach (string file in openFileDialog.FileNames)
                     {
                         FileInfo fileInfo = new FileInfo(file);
-                        files.Add(fileInfo);
+                        songList.Add(fileInfo);
                         fileList.Items.Add(fileInfo.Name);
+                        
                     }
                 }
 
@@ -78,26 +83,13 @@ namespace UltraPlayer
 
         private void fileList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (files.Count == 0) return;
+            if (songList.Count == 0) return;
 
             try
             {
                 int i = fileList.SelectedIndex;
-                FileInfo file = files[i];
+                FileInfo file = songList[i];
                 PlayMusic(file);
-
-                //DateTime dateTime = DateTime.ParseExact(audioFileReader.TotalTime.ToString(), "HH:mm:ss", CultureInfo.InvariantCulture);
-                //lbNow.Text = audioFileReader.CurrentTime.ToString();
-                //lbDuration.Text = dateTime.ToString("mm:ss");
-
-
-
-
-
-                //IWavePlayer wavePlayer = new WaveOut();
-                //wavePlayer.Init(audioFileReader);   
-                //wavePlayer.Play();
-
 
                 //var maxPeakProvider = new MaxPeakProvider();
                 //var rmsPeakProvider = new RmsPeakProvider(200); // e.g. 200
@@ -115,13 +107,13 @@ namespace UltraPlayer
 
         private void displayNumberOfSongs()
         {
-            if (files.Count == 1)
+            if (songList.Count == 1)
             {
-                lbNumberOfSongs.Text = files.Count.ToString() + " song";
+                lbNumberOfSongs.Text = songList.Count.ToString() + " song";
             }
             else
             {
-                lbNumberOfSongs.Text = files.Count.ToString() + " songs";
+                lbNumberOfSongs.Text = songList.Count.ToString() + " songs";
             }
         }
 
@@ -132,27 +124,39 @@ namespace UltraPlayer
                 if (player == null)
                 {
                     int selectedIndex = fileList.SelectedIndex;
-                    player = new Player(files[selectedIndex]);
-                    player.Play();
-                    btnPlay.ImageOptions.SvgImage = svgImageCollection[1];
+                    FileInfo fileInfo = songList[selectedIndex];
+                    PlayMusic(fileInfo);
                 }
                 else
                 {
                     if (player.getState() == PlaybackState.Stopped || player.getState() == PlaybackState.Paused)
                     {
                         player.Play();
-                        btnPlay.ImageOptions.SvgImage = svgImageCollection[1];
+                        playingSong = new System.Threading.Timer((o) =>
+                        {
+                            System.TimeSpan currentTime = player.AudioFile.CurrentTime;
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                lbNow.Text = new DateTime(currentTime.Ticks).ToString("mm:ss");
+                                float calc = (float)player.AudioFile.Position / (float)player.AudioFile.Length * 100;
+                                musicProgressBar.EditValue = calc;
+                            });
+
+                        }, null, 0, 1000);
+                        playingSong.InitializeLifetimeService();
+                        btnPlay.ImageOptions.SvgImage = svgImageCollection[0];
                     }
                     else
                     {
                         player.Pause();
-                        btnPlay.ImageOptions.SvgImage = svgImageCollection[0];
+                        playingSong.Dispose();
+                        btnPlay.ImageOptions.SvgImage = svgImageCollection[1];
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -165,16 +169,14 @@ namespace UltraPlayer
 
                 int nextIndex = selectedIndex + 1;
                 fileList.SelectedIndex = nextIndex;
-                FileInfo file = files[nextIndex];
+                FileInfo file = songList[nextIndex];
 
                 PlayMusic(file);
             }
             catch (Exception)
             {
-                
+
             }
-
-
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -186,7 +188,7 @@ namespace UltraPlayer
 
                 int previousIndex = selectedIndex - 1;
                 fileList.SelectedIndex = previousIndex;
-                FileInfo file = files[previousIndex];
+                FileInfo file = songList[previousIndex];
 
                 PlayMusic(file);
 
@@ -201,12 +203,28 @@ namespace UltraPlayer
         {
             try
             {
-                if (player != null) player.Stop();
-                btnPlay.ImageOptions.SvgImage = svgImageCollection[0];
+                StopMusic();
 
                 player = new Player(fileInfo);
                 player.Play();
-                btnPlay.ImageOptions.SvgImage = svgImageCollection[1];
+                btnPlay.ImageOptions.SvgImage = svgImageCollection[0];
+
+                System.TimeSpan totalTime = player.AudioFile.TotalTime;
+                lbDuration.Text = new DateTime(totalTime.Ticks).ToString("mm:ss");
+
+                playingSong = new System.Threading.Timer((o) =>
+                {
+                    System.TimeSpan currentTime = player.AudioFile.CurrentTime;
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        lbNow.Text = new DateTime(currentTime.Ticks).ToString("mm:ss");
+                        float calc = (float) player.AudioFile.Position / (float) player.AudioFile.Length * 100;
+                        musicProgressBar.EditValue = calc;
+                        Console.WriteLine(calc);
+                    });
+
+                }, null, 0, 1000);
+                playingSong.InitializeLifetimeService();
 
                 tagFile = TagLib.File.Create(fileInfo.FullName);
                 string title = tagFile.Tag.Title;
@@ -230,12 +248,21 @@ namespace UltraPlayer
                 {
                     songCover.Image = null;
                 }
-            }
-            catch (Exception)
-            {
 
             }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.ToString());
+            }
         }
+
+        private void StopMusic()
+        {
+            if (player != null) player.Stop();
+            if (playingSong != null) playingSong.Dispose();
+            btnPlay.ImageOptions.SvgImage = svgImageCollection[1];
+        }
+
 
         private void musicProgressBar_Click(object sender, EventArgs e)
         {
@@ -251,7 +278,7 @@ namespace UltraPlayer
         {
             try
             {
-                files.Clear();
+                songList.Clear();
                 fileList.Items.Clear();
                 lbBrowseFiles.Show();
                 displayNumberOfSongs();
@@ -283,12 +310,17 @@ namespace UltraPlayer
                 //string item = listBoxControl.GetItem(index) as string;
                 //object obj = index.ToString() + item;
                 //e.Info = new DevExpress.Utils.ToolTipControlInfo(obj, item);
-                string item = files[index].FullName;
+                string item = songList[index].FullName;
                 e.Info = new DevExpress.Utils.ToolTipControlInfo(fileList.Items[index], item);
             }
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void musicProgressBar_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
 
         }
