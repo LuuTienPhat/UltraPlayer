@@ -166,9 +166,11 @@
             this.musicProgressBar.Location = new System.Drawing.Point(240, 68);
             this.musicProgressBar.Margin = new System.Windows.Forms.Padding(5);
             this.musicProgressBar.Name = "musicProgressBar";
+            this.musicProgressBar.Properties.AllowAnimationOnValueChanged = DevExpress.Utils.DefaultBoolean.True;
             this.musicProgressBar.Size = new System.Drawing.Size(400, 6);
             this.musicProgressBar.TabIndex = 5;
             this.musicProgressBar.Click += new System.EventHandler(this.musicProgressBar_Click);
+            this.musicProgressBar.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.musicProgressBar_QueryContinueDrag);
             // 
             // sidePanel2
             // 
