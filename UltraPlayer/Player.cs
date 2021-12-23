@@ -1,14 +1,18 @@
 ﻿using NAudio.Wave;
 using System.IO;
-
+using System.Threading;
 
 namespace UltraPlayer
 {
     internal class Player
     {
-        private WaveOutEvent outputDevice { get; set; }
-        private AudioFileReader audioFile { get; set; }
-        private FileInfo fileInfo { get; set; }
+        private WaveOutEvent outputDevice;
+
+        private AudioFileReader audioFile;
+        public AudioFileReader AudioFile { get { return audioFile; } }
+
+        private FileInfo fileInfo;
+        public FileInfo FileInfo { get { return fileInfo; } }
 
         public Player(FileInfo fileInfo)
         {
